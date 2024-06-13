@@ -1,0 +1,10 @@
+﻿namespace WorkerService.Models;
+
+public class PdfFile
+{
+    public int Id { get; set; }
+    public string FileName { get; set; }
+    public byte[] FileData { get; set; }
+    
+    public int ReservationId { get; set; }
+}
