@@ -13,13 +13,33 @@ namespace Api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Cars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Make = table.Column<string>(type: "text", nullable: false),
+                    Model = table.Column<string>(type: "text", nullable: false),
+                    Year = table.Column<int>(type: "integer", nullable: false),
+                    LicensePlate = table.Column<string>(type: "text", nullable: false),
+                    StatusId = table.Column<int>(type: "integer", nullable: false),
+                    PricePerDay = table.Column<decimal>(type: "numeric", nullable: false),
+                    ReservationStatus = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cars", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PdfFiles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FileName = table.Column<string>(type: "text", nullable: false),
-                    FileData = table.Column<byte[]>(type: "bytea", nullable: false)
+                    FileData = table.Column<byte[]>(type: "bytea", nullable: false),
+                    ReservationId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,31 +92,6 @@ namespace Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cars",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Make = table.Column<string>(type: "text", nullable: false),
-                    Model = table.Column<string>(type: "text", nullable: false),
-                    Year = table.Column<int>(type: "integer", nullable: false),
-                    LicensePlate = table.Column<string>(type: "text", nullable: false),
-                    StatusId = table.Column<int>(type: "integer", nullable: false),
-                    PricePerDay = table.Column<decimal>(type: "numeric", nullable: false),
-                    ReservationStatusId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cars", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cars_ReservationStatuses_ReservationStatusId",
-                        column: x => x.ReservationStatusId,
-                        principalTable: "ReservationStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reservations",
                 columns: table => new
                 {
@@ -126,11 +121,6 @@ namespace Api.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cars_ReservationStatusId",
-                table: "Cars",
-                column: "ReservationStatusId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reservations_CarId",
                 table: "Reservations",
                 column: "CarId");
@@ -154,13 +144,13 @@ namespace Api.Migrations
                 name: "Reservations");
 
             migrationBuilder.DropTable(
+                name: "ReservationStatuses");
+
+            migrationBuilder.DropTable(
                 name: "Cars");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "ReservationStatuses");
         }
     }
 }

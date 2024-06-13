@@ -47,9 +47,6 @@ namespace Api.Controllers
                 PricePerDay = carDto.pricePerDay,
                 StatusId = carDto.statusId,
                 ReservationStatus = carDto.reservationStatusId
-                
-                
-                // Initialize other properties if necessary
             };
 
             await _carService.AddAsync(car);
