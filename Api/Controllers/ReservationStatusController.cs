@@ -35,13 +35,6 @@ namespace Api.Controllers
             return Ok(reservationStatus);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddAsync(ReservationStatus reservationStatus)
-        {
-            await _reservationStatusService.AddAsync(reservationStatus);
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = reservationStatus.Id }, reservationStatus);
-        }
-
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAsync(int id, ReservationStatus reservationStatus)
         {
@@ -50,13 +43,6 @@ namespace Api.Controllers
                 return BadRequest();
             }
             await _reservationStatusService.UpdateAsync(reservationStatus);
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAsync(int id)
-        {
-            await _reservationStatusService.DeleteAsync(id);
             return NoContent();
         }
     }

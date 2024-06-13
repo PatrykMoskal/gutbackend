@@ -39,7 +39,7 @@ namespace Api.Controllers
         public async Task<ActionResult> AddAsync(User user)
         {
             await _userService.AddAsync(user);
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = user.Id }, user);
+            return Ok(new PostResult() { Id = user.Id });
         }
 
         [HttpPut("{id}")]

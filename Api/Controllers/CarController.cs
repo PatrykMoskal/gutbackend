@@ -53,7 +53,7 @@ namespace Api.Controllers
             };
 
             await _carService.AddAsync(car);
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = car.Id }, car);
+            return Ok(new PostResult() { Id = car.Id });
         }
 
         [HttpPut("{id}")]
