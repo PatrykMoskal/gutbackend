@@ -7,9 +7,12 @@ services:
     ports:
       - "5432:5432"
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: fred
+      POSTGRES_DB: carRentalDb
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./postgres-init:/docker-entrypoint-initdb.d
 
   redis:
     image: redis:latest
